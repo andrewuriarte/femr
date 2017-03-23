@@ -8,6 +8,7 @@ import femr.common.dtos.ServiceResponse;
 import femr.data.models.core.IUser;
 import femr.ui.models.sessions.CreateViewModel;
 import femr.ui.views.html.sessions.create;
+import femr.ui.views.html.sessions.create2;
 import femr.ui.views.html.sessions.editPassword;
 import femr.util.calculations.dateUtils;
 import femr.util.stringhelpers.StringUtils;
@@ -54,7 +55,12 @@ public class SessionsController extends Controller {
         ServiceResponse<CurrentUser> response = sessionsService.createSession(viewModel.getEmail(), viewModel.getPassword(), request().remoteAddress());
 
         if (response.hasErrors()) {
-            return ok(create.render(createViewModelForm));
+//            CreateViewModel emailModel = new CreateViewModel();
+//            emailModel.setEmail(viewModel.getEmail());
+//            createViewModelForm.fill(emailModel);
+            return ok(create2.render(createViewModelForm, viewModel.getEmail()));
+//            String email = viewModel.getEmail();
+//            return ok(create.render( )
         }else{
             IUser user = userService.retrieveById(response.getResponseObject().getId());
             user.setLastLogin(dateUtils.getCurrentDateTime());
